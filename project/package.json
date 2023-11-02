@@ -4,6 +4,8 @@
   "description": "bmi calculator",
   "main": "bmiCalculator.ts",
   "scripts": {
+    "bmiCalculator": "ts-node bmiCalculator",
+    "exerciseCalculator": "ts-node exerciseCalculator",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jojimanos",
