@@ -1,4 +1,4 @@
-import { argv } from "process"
+// import { argv } from "process"
 
 const bmiCalculator = (weight: string, height: string): string => {
 
@@ -14,6 +14,9 @@ const bmiCalculator = (weight: string, height: string): string => {
         message = `overweight, ${bmi}`
     }
 
+    if (Number.isNaN(bmi))
+    message = "malformated credentials"
+
     console.log(message)
 
     return (
@@ -21,4 +24,6 @@ const bmiCalculator = (weight: string, height: string): string => {
     )
 }
 
-bmiCalculator(argv[2], argv[3])
+// bmiCalculator(argv[2], argv[3])
+
+export default bmiCalculator
