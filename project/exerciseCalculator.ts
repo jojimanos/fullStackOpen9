@@ -1,3 +1,5 @@
+import { argv } from "process";
+
 interface exerciseEvaluation {
     numberOfDays: number;
     numberOfTrainingDays: number;
@@ -10,7 +12,9 @@ interface exerciseEvaluation {
 
 type successRating = "1" | "2" | "3"
 
-const exerciseCalculator = (hoursArray: Array<number>, targetValue: number): exerciseEvaluation => {
+const exerciseCalculator = (targetValue: string, hoursStringArray: Array<string> ): exerciseEvaluation => {
+
+    let hoursArray = hoursStringArray.map(Number)
 
     let numberOfDays: number = hoursArray.length
 
@@ -23,7 +27,7 @@ const exerciseCalculator = (hoursArray: Array<number>, targetValue: number): exe
         numberOfTrainingDays = numberOfTrainingDays
     })
 
-    let target = targetValue
+    let target = parseInt(targetValue)
 
     let trainingTime: number = 0
 
@@ -61,7 +65,9 @@ const exerciseCalculator = (hoursArray: Array<number>, targetValue: number): exe
         message: message
     }
 
+    console.log(evaluation)
+
     return evaluation
 }
 
-console.log(exerciseCalculator([3, 4, 5, 6, 4, 1,], 1))
+exerciseCalculator(argv[2], argv.slice(3))

@@ -1,6 +1,8 @@
-const bmiCalculator = (weight: number, height: number): string => {
+import { argv } from "process"
 
-    let bmi: number = weight/(Math.pow(height/100, 2))
+const bmiCalculator = (weight: string, height: string): string => {
+
+    let bmi: number = parseInt(weight)/(Math.pow(parseInt(height)/100, 2))
 
     let message: string = ""
 
@@ -12,9 +14,11 @@ const bmiCalculator = (weight: number, height: number): string => {
         message = `overweight, ${bmi}`
     }
 
+    console.log(message)
+
     return (
         message
     )
 }
 
-console.log(bmiCalculator(70, 170))
+bmiCalculator(argv[2], argv[3])
