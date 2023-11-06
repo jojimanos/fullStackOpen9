@@ -1,5 +1,3 @@
-import { argv } from "process";
-
 const bmiCalculator = (weight: string, height: string): string => {
 
     const bmi: number = parseInt(weight)/(Math.pow(parseInt(height)/100, 2));
@@ -24,4 +22,4 @@ const bmiCalculator = (weight: string, height: string): string => {
     );
 };
 
-bmiCalculator(argv[2], argv[3])
+export default bmiCalculator;

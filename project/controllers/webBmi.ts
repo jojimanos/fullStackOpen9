@@ -1,35 +1,37 @@
 import { Router } from "express";
-import bmiCalculator from "../bmiCalculator";
+import bmiCalculator from "./middleware/bmiCalculator";
 
-const webBmiRouter = Router()
+const webBmiRouter = Router();
 
-webBmiRouter.get("/bmi", async (req, res) => {
+webBmiRouter.get("/bmi", (req, res) => {
 
     try {
 
-        let weight = req.query.weight?.toString()
-        let height = req.query.height?.toString()
+        let weight = req.query.weight?.toString();
+        let height = req.query.height?.toString();
 
         if (weight === undefined) {
-            weight = ""
+            weight = "";
         }
 
         if (height === undefined) {
-            height = ""
+            height = "";
         }
 
-        let result = bmiCalculator(weight, height)
+        const result = bmiCalculator(weight, height);
 
         if (result === "malformated credentials") {
-            res.json(result)
+            res.json(result);
         } else {
-            res.json({ weight: weight, height: height, result })
+            res.json({ weight: weight, height: height, result });
         }
 
-    } catch (error) {
-        console.log("malformatted parameters", error.message)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        console.log("malformatted parameters", error.message);
     }
 
-})
+});
 
-export default webBmiRouter
+export default webBmiRouter;

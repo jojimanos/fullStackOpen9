@@ -1,5 +1,3 @@
-import { argv } from "process";
-
 interface exerciseEvaluation {
     numberOfDays: number;
     numberOfTrainingDays: number;
@@ -34,7 +32,7 @@ const exerciseCalculator = (targetValue: string, hoursStringArray: Array<string>
     let averageTrainingTime: number = 0;
 
     hoursArray.map(h => trainingTime = trainingTime + h);
-    // console.log(trainingTime, hoursArray.length);
+    console.log(trainingTime, hoursArray.length);
 
     averageTrainingTime = trainingTime/numberOfDays;
 
@@ -65,9 +63,8 @@ const exerciseCalculator = (targetValue: string, hoursStringArray: Array<string>
         message: message
     };
 
-    console.log(evaluation)
-
     return evaluation;
 };
 
-exerciseCalculator(argv[2], argv.slice(3))
+
+export default exerciseCalculator
