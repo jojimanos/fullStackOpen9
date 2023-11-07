@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node index.ts"
+    "dev": "ts-node index.ts",
+    "lint": "eslint"
   },
   "author": "jojimanos",
   "license": "ISC",
@@ -18,7 +19,9 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.6",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
   }
 }
