@@ -28,8 +28,9 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
 
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
-      const patient = await patientService.create(values);
-      setPatients(patients.concat(patient));
+      await patientService.create(values)
+      const newPatients = await patientService.getAll()
+      setPatients(newPatients);
       setModalOpen(false);
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {

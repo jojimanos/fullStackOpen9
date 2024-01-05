@@ -1,13 +1,13 @@
 import router from "express";
 import data from "../data/patients";
-import { Patient } from "../types/types";
+import { Gender, Patient } from "../types/types";
 import { v1 as uuidv4 } from "uuid";
 import parseNewPatientEntryType from "../utils/utils";
 
 const patientsRouter = router();
 
 patientsRouter.get("/patients", async (req, res) => {
-  const patientsData: Patient[] = data.map((d) => parseNewPatientEntryType(d));
+  const patientsData: Patient[] = data.map((d: Patient) => parseNewPatientEntryType(d));
 
   const patients = (): Omit<Patient, "ssn">[] => {
     return patientsData.map(
@@ -36,10 +36,10 @@ patientsRouter.post("/patients", async (req, res) => {
       gender: req.body.gender,
       occupation: req.body.occupation,
     };
-
-    res.json(newPatient);
-    // const patients: Patient[] = data
-    // patients.push(newPatient)
+    data.push(newPatient)
+    const patients: Patient[] = data.map((d: Patient) => parseNewPatientEntryType(d));
+    patients.push(newPatient);
+    res.json(patients);
   } catch (error) {
     console.log("There was an error while registering the patient", error);
   }
