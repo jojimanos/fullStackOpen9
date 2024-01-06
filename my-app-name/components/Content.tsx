@@ -1,26 +1,15 @@
 import React from "react";
-
-type courseParts = {
-  name: string;
-  exerciseCount: number;
-};
+import Part from "./Part"
+import { CoursePart } from "../types/types";
 
 type ContentProps = {
-  courseParts: courseParts[];
+  courseParts: CoursePart[];
 };
 
 const Content = ({ courseParts }: ContentProps): React.ReactElement => {
   return (
     <div>
-      <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
-      </p>
+      {courseParts.map((c, i) => <Part key={i} coursePart={c}/>)}
     </div>
   );
 };

@@ -7,7 +7,7 @@ type TotalProps = {
 const Total = (props: TotalProps): React.ReactElement => {
   return (
     <div>
-        {props.totalExercises}
+      <strong>Total exercises:</strong> {props.totalExercises}
     </div>
   );
 };

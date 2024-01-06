@@ -1,34 +1,7 @@
 import Header from "../components/Header";
 import Content from "../components/Content";
 import Total from "../components/Total";
-
-interface CoursePartBase {
-  name: string;
-  exerciseCount: number;
-}
-
-interface CoursePartDescription extends CoursePartBase {
-  description: string;
-}
-
-interface CoursePartBasic extends CoursePartDescription {
-  // description: string;
-  kind: "basic";
-}
-
-interface CoursePartGroup extends CoursePartBase {
-  groupProjectCount: number;
-  kind: "group";
-}
-
-interface CoursePartBackground extends CoursePartDescription {
-  // description: string;
-  backgroundMaterial: string;
-  kind: "background";
-}
-
-
-type CoursePart = CoursePartBasic | CoursePartGroup | CoursePartBackground | CoursePartDescription;
+import { CoursePart } from "../types/types";
 
 const App = () => {
   const courseName = "Half Stack application development";
@@ -65,6 +38,13 @@ const App = () => {
       exerciseCount: 10,
       description: "a hard part",
       kind: "basic",
+    },
+    {
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      kind: "special",
     },
   ];
 
