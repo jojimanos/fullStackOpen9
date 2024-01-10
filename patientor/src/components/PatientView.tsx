@@ -1,30 +1,17 @@
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { Patient } from "../types";
+import { Box, Container } from "@mui/material";
+import { Diagnosis, Patient } from "../types";
 import patients from "../services/patients";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import EntryComponent from "./EntryComponent";
+import PatientDetails from "./PatientDetails";
 
 const PatientView = () => {
-  //   let params = useParams();
-
-  //   if (params.id === undefined)
-  //   return <div>Loading...</div>
-  //
-  //   const patient = patients.filter((p) => p.id === params.id);
-
-  //   console.log(patient)
   const { id } = useParams<{ id: string }>();
 
   console.log(id);
   const [patient, setPatient] = useState<Patient[]>();
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>();
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -33,37 +20,26 @@ const PatientView = () => {
       setPatient(fetchedPatient);
     };
     void fetchPatient();
+    const fetchDiagnoses = async () => {
+      const fetchedDiagnoses = await patients.getDiagnoses();
+      console.log(fetchedDiagnoses);
+      setDiagnoses(fetchedDiagnoses);
+    };
+    void fetchDiagnoses();
   }, []);
 
-  if (patient === undefined) return <div>Loading...</div>;
+  if (patient === undefined || diagnoses === undefined)
+    return <div>Loading...</div>;
 
   console.log(patient);
 
   return (
-    <div>
+    <Container>
       <Box>
-        <Typography variant="h6">Patient: {patient[0].name}</Typography>
+        <PatientDetails patient={patient[0]} />
+        <EntryComponent entries={patient[0].entries} diagnoses={diagnoses} />
       </Box>
-      <Table>
-        <TableHead style={{marginBottom: "1em"}}>
-          <TableRow></TableRow>
-        </TableHead>
-        <TableBody>
-            <TableRow>
-                <TableCell>Gender</TableCell>
-                <TableCell>Occupation</TableCell>
-                <TableCell>Birth Date</TableCell>
-                <TableCell>SSN</TableCell>
-            </TableRow>
-          <TableRow>
-            <TableCell>{patient[0].gender}</TableCell>
-            <TableCell>{patient[0].occupation}</TableCell>
-            <TableCell>{patient[0].dateOfBirth}</TableCell>
-            <TableCell>{patient[0].ssn}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
+    </Container>
   );
 };
 

@@ -1,8 +1,8 @@
 import router from "express";
 import data from "../data/patients";
-import { Gender, Patient } from "../types/types";
+import { Entry, Gender, Patient } from "../types/types";
 import { v1 as uuidv4 } from "uuid";
-import parseNewPatientEntryType from "../utils/utils";
+import { parseNewPatientEntryType } from "../utils/utils";
 
 const patientsRouter = router();
 
@@ -59,6 +59,21 @@ patientsRouter.post("/patients", async (req, res) => {
     );
     patients.push(newPatient);
     res.json(patients);
+  } catch (error) {
+    console.log("There was an error while registering the patient", error);
+  }
+});
+
+patientsRouter.post("/patients/:id/entries", async (req, res) => {
+  try {
+    // const newEntry: Entry = {
+    // };
+    // data.push(newPatient);
+    // const patients: Patient[] = data.map((d: Patient) =>
+      // parseNewPatientEntryType(d)
+    // );
+    // patients.push(newPatient);
+    // res.json(patients);
   } catch (error) {
     console.log("There was an error while registering the patient", error);
   }
