@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node index.ts && json-server --watch db.json",
+    "dev": "nodemon index.ts",
     "lint": "eslint"
   },
   "author": "jojimanos",
@@ -22,6 +22,8 @@
     "@types/uuid": "^9.0.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
     "uuid": "^9.0.1"
   }
 }

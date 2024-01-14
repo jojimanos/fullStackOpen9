@@ -1,5 +1,5 @@
 import { Diagnosis, Entry, Patient } from "../types/types";
-import { parseAllExceptGender, parseGender } from "./parsers/parsers";
+import { parseAllExceptGender, parseGender, parseEntries } from "./parsers/parsers";
 
 const parseNewPatientEntryType = (object: unknown): Patient => {
   if (!object || typeof object !== "object") {
@@ -22,7 +22,7 @@ const parseNewPatientEntryType = (object: unknown): Patient => {
       ssn: parseAllExceptGender(object.ssn),
       gender: parseGender(object.gender),
       occupation: parseAllExceptGender(object.occupation),
-      entries: object.entries as Entry[],
+      entries: parseEntries(object.entries)
     };
     return newPatientEntry;
   }

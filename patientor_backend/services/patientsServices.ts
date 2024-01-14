@@ -3,6 +3,10 @@ import data from "../data/patients";
 import { Entry, Gender, Patient } from "../types/types";
 import { v1 as uuidv4 } from "uuid";
 import { parseNewPatientEntryType } from "../utils/utils";
+import {
+  parseDiagnosisCodes,
+  parseHealthRating,
+} from "../utils/parsers/parsers";
 
 const patientsRouter = router();
 
@@ -64,17 +68,69 @@ patientsRouter.post("/patients", async (req, res) => {
   }
 });
 
-patientsRouter.post("/patients/:id/entries", async (req, res) => {
+patientsRouter.post("/patients/:id/entries", async (req, res, next) => {
   try {
-    // const newEntry: Entry = {
-    // };
-    // data.push(newPatient);
-    // const patients: Patient[] = data.map((d: Patient) =>
-      // parseNewPatientEntryType(d)
-    // );
-    // patients.push(newPatient);
-    // res.json(patients);
-  } catch (error) {
+    let body = req.body;
+
+    const newEntry = (): Entry | null => {
+      switch (body.type) {
+        case "Hospital":
+          return {
+            id: body.id,
+            type: body.type,
+            description: body.description,
+            date: body.date,
+            specialist: body.specialist,
+            diagnosisCodes: parseDiagnosisCodes(body),
+            discharge: body.discharge,
+          };
+        case "OccupationalHealthCare":
+          return {
+            id: body.id,
+            type: body.type,
+            description: body.description,
+            date: body.date,
+            specialist: body.specialist,
+            diagnosisCodes: parseDiagnosisCodes(body),
+            employerName: body.employerName,
+            sickLeave: {
+              startDate: body.startDate,
+              endDate: body.endDate,
+            },
+          };
+        case "HealthCheck":
+          return {
+            id: body.id,
+            type: body.type,
+            description: body.description,
+            date: body.date,
+            specialist: body.specialist,
+            diagnosisCodes: parseDiagnosisCodes(body),
+            healthCheckRating: parseHealthRating(body.healthCheckRating),
+          };
+        default:
+          return null;
+      }
+    };
+
+    console.log("This is the new Entry", newEntry());
+
+    if (newEntry() === null) {
+      res.json("unspecified type");
+      return new Error("unspecified type");
+    } else {
+      const patients = data.map((d) => parseNewPatientEntryType(d));
+      const patient = data.filter((d) => d.id === req.params.id);
+
+      const entries: Entry[] = patient[0].entries;
+      entries.push(newEntry() as Entry);
+      patients.map((p) =>
+        p.id === req.params.id ? (p.entries = entries) : p.entries
+      );
+      res.json(entries);
+    }
+  } catch (error: any) {
+    next(error.message);
     console.log("There was an error while registering the patient", error);
   }
 });
